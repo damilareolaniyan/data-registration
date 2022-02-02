@@ -33,18 +33,40 @@ app.get('/', (req, res) =>{
 })
 
 app.get('/verify', async(req, res) =>{
-    const search = req.query;
-    const form = Form.find(search)
-    console.log(form)
-    res.render('verify')
-    
-    
+    // const search = req.query;
+    // const form = Form.find(search)
+    // console.log(form)
+    let results;
+    res.render('verify', {
+        results
+    })   
+})
+
+app.post('/verify', async(req, res) =>{
+    const search = req.body.search;
+    Form.find({search}).then(
+        form => {
+            function filterItems(arr, query) {
+                return arr.filter(function(el) {
+                  return el.toString().toLowerCase().indexOf(query.toLowerCase()) !== -1
+                })
+              }
+
+              let results = filterItems(form, search);
+
+              console.log(results);
+            res.render('verify', {
+                results
+            })   
+        }
+    )
+    // console.log(form)
 })
 
 app.post('/submit', async(req, res)=>{
     const verify = new Form(req.body.verify)
     await verify.save()
-    console.log(verify)
+    // console.log(verify)
     res.redirect('/')
 })
 

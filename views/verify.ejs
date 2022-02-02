@@ -6,13 +6,18 @@
     <title>Verify User</title>
 </head>
 <body>
-    <h1>Verify User</h1>
-    <p>Search for users</p>
-    <div>
-        <form action="/verify" method="GET">
-            <input type="search" name="search">
-            <button>Search</button>
-        </form>
-    </div>
+    <% if(!results) {%>
+        <h1>Verify User</h1>
+        <p>Search for users</p>
+        <div>
+            <form action="/verify" method="POST">
+                <input type="search" name="search">
+                <button>Search</button>
+            </form>
+        </div>
+    <% } %>
+
+    <p><%= results %></p>
+   
 </body>
 </html>
